@@ -11,11 +11,11 @@ $("#currentTime").append(currentHour);
 var saveEvent;
 //time of event variable
 var saveHr;
+var eventList = [];
 
 //3.dynamically append text area
     //a. an array of hours 
     var timeArray=[9,10,11,12,13,14,15,16,17];
-    console.log(timeArray)
     var timeDisplay = ["9:00am","10:00am","11:00am","12:00pm","1:00pm","2:00pm","3:00pm","4:00pm","5:00pm"]
     
 // <div class="input-group mb-3">
@@ -44,13 +44,10 @@ var saveHr;
        
         var input=$("<input>");
 
-        console.log(timeArray[j])
-        console.log("inside forloop")
         span.attr("id", timeArray[j]);
  
         if (currentHour > timeArray[j]) {
             input.attr("class", "form-control input past");
-
         }
         if(currentHour==timeArray[j]){
             input.attr("class", "form-control input present");
@@ -73,24 +70,32 @@ var saveHr;
         d1.append(btn);
 
         $(".container").append(d1);
-    
     }
 
-
-
-//5. create submit fx that fires when you click the submitbtn
+    //5. create submit fx that fires when you click the submitbtn
     //a. grab user value
     //b. grab current hour
     //c. set to localstorage hour=value (9="Testing")
 
-    $("#saveBtn").click(function (event) {
-      event.preventDefault();
-      alert("clicked");
+    $(".btn").click(function (event) {
+        event.preventDefault();
+        saveEvent = $(this).siblings(".input").val().trim();
+        // grab saveEvent value to set as "value" in localStorage
+        localStorage.setItem(saveHr, JSON.stringify(saveEvent));
 
+    $(".input").each(function (event) {
+        //grab id value data to set as "key" in localStorage
+        //HOW TO GRAB SPAN ID?????
+        saveHr = $(this).siblings("id").text();
+        //console.log(saveHr);
+        eventList = JSON.parse(localStorage.getItem(saveHr));
+        console.log(eventList);
+        $(this).val("");
+        $(this).val(eventList);
+      });
+  
     });
-
 });
-
 
 
 //6. get the data from localstorage and append it to the associated textarea (shows persistance)
