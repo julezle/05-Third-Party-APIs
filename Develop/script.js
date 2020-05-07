@@ -1,8 +1,13 @@
+
+
 $(document).ready(function () {
 //1. get date and append to html
 var date=moment().format('dddd, MMMM Do YYYY');
 //2. get currenthour (so we can later add present future or past)
 var currentHour=parseInt(moment().format('HH'));    //9
+
+//$(".form-control#9").append(localStorage.getItem("9"));
+
 
 $("#currentDay").append(date);
 $("#currentTime").append(currentHour);
@@ -45,15 +50,18 @@ var eventList = [];
         var input=$("<input>");
 
         span.attr("id", timeArray[j]);
+        input.attr("type","text");
+        input.attr("aria-label","UserName");
+        input.attr("aria-describedby", "basic-addon1")
  
         if (currentHour > timeArray[j]) {
-            input.attr("class", "form-control input past");
+            input.attr("class", "form-control input past "+timeArray[j]);
         }
         if(currentHour==timeArray[j]){
-            input.attr("class", "form-control input present");
+            input.attr("class", "form-control input present "+timeArray[j]);
         }
         if(currentHour < timeArray[j]) {
-            input.attr("class", "form-control input future");
+            input.attr("class", "form-control input future "+timeArray[j]);
         }
         //add id so user can grab time and userinput in the same area
         input.attr("id", timeArray[j]);
@@ -81,21 +89,26 @@ var eventList = [];
         event.preventDefault();
         saveEvent = $(this).siblings(".input").val().trim();
         // grab saveEvent value to set as "value" in localStorage
-        localStorage.setItem(saveHr, JSON.stringify(saveEvent));
+        //localStorage.setItem(saveHr, JSON.stringify(saveEvent));
+        //user's value
+        console.log(saveEvent);
+        //the current hour
+        console.log($(this).siblings(".input").attr("id"))
+        //localstroage.setItem(hour, userinput)
+        localStorage.setItem($(this).siblings(".input").attr("id"), JSON.stringify(saveEvent));
 
-    $(".input").each(function (event) {
-        //grab id value data to set as "key" in localStorage
-        //HOW TO GRAB SPAN ID?????
-        saveHr = $(this).siblings("id").text();
-        //console.log(saveHr);
-        eventList = JSON.parse(localStorage.getItem(saveHr));
-        console.log(eventList);
-        $(this).val("");
-        $(this).val(eventList);
-      });
-  
     });
-});
-
 
 //6. get the data from localstorage and append it to the associated textarea (shows persistance)
+    //local.setAttribute(value, localstorage data at 9)
+    $(".9").attr("value",JSON.parse(localStorage.getItem("9")));
+    $(".10").attr("value",JSON.parse(localStorage.getItem("10")));
+    $(".11").attr("value",JSON.parse(localStorage.getItem("11")));
+    $(".12").attr("value",JSON.parse(localStorage.getItem("12")));
+    $(".13").attr("value",JSON.parse(localStorage.getItem("13")));
+    $(".14").attr("value",JSON.parse(localStorage.getItem("14")));
+    $(".15").attr("value",JSON.parse(localStorage.getItem("15")));
+    $(".16").attr("value",JSON.parse(localStorage.getItem("16")));
+    $(".17").attr("value",JSON.parse(localStorage.getItem("17")));
+});
+
